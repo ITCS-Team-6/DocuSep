@@ -1,3 +1,4 @@
+#need to import these packages
 import os
 import cv2
 import numpy as np
@@ -11,7 +12,9 @@ from keras.datasets import mnist
 from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
 
-data = r"C:\Users\Brenden\PycharmProjects\pythonProject\Machine Printed\Handwritten\A_Z Handwritten Data.csv"
+#pathing will determine where your files are located
+data = r"Datasets/Handwritten/A_Z Handwritten Data.csv"
+
 
 dataset = pd.read_csv(data).astype("float32")
 dataset.rename(columns={'0': "label"}, inplace=True)
@@ -44,33 +47,3 @@ for i in range (rows * cols):
     plt.imshow(shuffle_data[i].reshape(28,28), interpolation="nearest", cmap="gray")
 
 plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
