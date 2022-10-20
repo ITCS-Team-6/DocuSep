@@ -89,7 +89,7 @@ test_data = np.reshape(test_data, (test_data.shape[0], test_data.shape[1], test_
 print(train_data.shape, train_labels.shape)
 print(test_data.shape, test_labels.shape)
 
-#saving the numpy arrays  data to use for training
+#saving the numpy arrays  data to use for training...uncomment for these to save to your machine 
 # np.save(r"numpy/train_data", train_data)
 # np.save(r"numpy/train_labels", train_labels)
 # np.save(r"numpy/test_data", test_data)
