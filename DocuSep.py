@@ -1,20 +1,16 @@
 #need to import these packages
 import os
-import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-import tensorflow as tf
-import tensorflow_datasets as tfds
-from extra_keras_datasets import emnist
 from keras.utils import np_utils
-from keras.datasets import mnist
 from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
 
 #link for dataset: https://www.kaggle.com/datasets/sachinpatel21/az-handwritten-alphabets-in-csv-format
 #pathing will determine where your files are located
 data = r"Datasets/Handwritten/A_Z Handwritten Data.csv"
+data_2 = r"Datasets/Machine/digital_letters.csv"
 
 #variables to load the dataset csvs
 dataset = pd.read_csv(data).astype("float32")
