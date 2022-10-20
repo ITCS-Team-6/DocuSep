@@ -8,6 +8,7 @@ from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
 
 #link for dataset: https://www.kaggle.com/datasets/sachinpatel21/az-handwritten-alphabets-in-csv-format
+#Digital: https://www.kaggle.com/datasets/adamkaniasty/digital-letters
 #pathing will determine where your files are located
 data = r"Datasets/Handwritten/A_Z Handwritten Data.csv"
 data_2 = r"Datasets/Machine/digital_letters.csv"
