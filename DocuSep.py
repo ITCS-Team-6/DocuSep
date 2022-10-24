@@ -1,4 +1,5 @@
 #need to import these packages
+#also need tensorflow on for backend sklearn and keras need tensorflow to work but don't need to import it 
 import os
 import numpy as np
 import matplotlib.pyplot as plt
