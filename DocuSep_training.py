@@ -1,5 +1,6 @@
 import numpy as np
 from keras.models import Sequential
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, BatchNormalization
 
 # pulling the arrays models
 train_data = np.load(r"numpy/train_data.npy")
