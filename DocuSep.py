@@ -4,7 +4,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from keras.utils import np_utils
+from keras.utils import to_categorical
 from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
 
@@ -81,12 +81,12 @@ train_data = train_data / 255.0
 test_data = test_data / 255.0
 
 #setting the label variables to categorical formats
-train_labels = np_utils.to_categorical(train_labels)
-test_labels = np_utils.to_categorical(test_labels)
+train_labels = to_categorical(train_labels, num_classes= 26, dtype= 'int')
+test_labels = to_categorical(test_labels, num_classes= 26, dtype= 'int')
 
 #turning the data into 4d array
-train_data = np.reshape(train_data, (train_data.shape[0], train_data.shape[1], train_data.shape[2], 1))
-test_data = np.reshape(test_data, (test_data.shape[0], test_data.shape[1], test_data.shape[2], 1))
+train_data = train_data.reshape(train_data.shape[0], train_data.shape[1], train_data.shape[2], 1)
+test_data = test_data.reshape(test_data.shape[0], test_data.shape[1], test_data.shape[2], 1)
 
 print(train_data.shape, train_labels.shape)
 print(test_data.shape, test_labels.shape)
