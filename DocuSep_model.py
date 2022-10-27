@@ -11,49 +11,49 @@ from sklearn.model_selection import train_test_split
 #link for dataset: https://www.kaggle.com/datasets/sachinpatel21/az-handwritten-alphabets-in-csv-format
 #Digital: https://www.kaggle.com/datasets/adamkaniasty/digital-letters
 #pathing will determine where your files are located
-data = r"Datasets/Handwritten/A_Z Handwritten Data.csv"
-data_2 = r"Datasets/Machine/digital_letters.csv"
+data_H = r"Datasets/Handwritten/A_Z Handwritten Data.csv"
+data_D = r"Datasets/Machine/digital_letters.csv"
 
 #variables to load the dataset csvs
-dataset = pd.read_csv(data).astype("float32")
-dataset.rename(columns={'0': "label"}, inplace=True)
+dataset_H = pd.read_csv(data_H).astype("float32")
+dataset_H.rename(columns={'0': "label"}, inplace=True)
 #creating variables that correspond to the data within the CSV file
-dataset = pd.read_csv(data).astype("float32")
-dataset_2 = pd.read_csv(data_2)
+dataset_D = pd.read_csv(data_D).astype("float32")
 
 #renaming the first column in the csv file and naming it label
-dataset.rename(columns={'0': "label"}, inplace=True)
-dataset_2.rename(columns={'0': "label"}, inplace=True)
+dataset_H.rename(columns={'0': "label"}, inplace=True)
+dataset_D.rename(columns={'0': "label"}, inplace=True)
 
 #variables being passed the data and removing the label column from the letter variable
-letter_x = dataset.drop("label", axis = 1)
-letter_x_2 = dataset_2.drop("label", axis=1)
+letter_H = dataset_H.drop("label", axis = 1)
+letter_D = dataset_D.drop("label", axis=1)
+
 #creating the varuable that is assigned to the label
-letter_y = dataset["label"]
-letter_y_2 = dataset_2["label"]
+label_H = dataset_H["label"]
+label_D = dataset_D["label"]
 
 #variable associated to the letters within the csv file
-letter_x = letter_x.values
-letter_x_2 = letter_x_2.values
+letter_H = letter_H.values
+letter_D = letter_D.values
 
-print(letter_x.shape, letter_y.shape)
-print(letter_x_2.shape, letter_y_2.shape)
+print(letter_H.shape, label_H.shape)
+print(letter_D.shape, label_D.shape)
 
 #creating an empty array
-data = []
+data_H = []
 
 #reshaping the array to fit the 28 x 28 format of the images
-for smash in letter_x:
+for smash in letter_H:
     image = np.reshape(smash, (28,28,1))
-    data.append(image)
+    data_H.append(image)
 
 #creating a variable that has the data that is then created to numpy array
-letter_data = np.array(data, dtype=np.float32)
-letter_target = letter_y
+letter_data_H = np.array(data_H, dtype=np.float32)
+letter_label_H = label_H
 
-print(letter_data.shape, letter_target.shape)
+print(letter_data_H.shape, letter_label_H.shape)
 
-# shuffle_data = shuffle(letter_data)
+# shuffle_data = shuffle(letter_data_H)
 # rows,cols = 10 ,10
 
 # plt.figure(figsize=(20,20))
@@ -65,34 +65,34 @@ print(letter_data.shape, letter_target.shape)
 # plt.show()
 
 #assigning these varaibles to the letters itself and the labels
-data = letter_data
-target = letter_target
-
-# print(data.shape, target.shape)
+data_H = letter_data_H
+label_obj_H = letter_label_H
+    
+# print(data_H.shape, label_obj_H.shape)
 
 #creating varaibles for training and testing
-train_data, test_data, train_labels, test_labels = train_test_split(data, target , test_size=0.2)
+train_data_H, test_data_H, train_labels_H, test_labels_H = train_test_split(data_H, label_obj_H , test_size=0.2)
 
-# print(train_data.shape, train_labels.shape)
-# print(test_data.shape, test_labels.shape)
+# print(train_data_H.shape, train_labels_H.shape)
+# print(test_data_H.shape, test_labels_H.shape)
 
 #normalizing the data to make the pixel range 0-1
-train_data = train_data / 255.0
-test_data = test_data / 255.0
+train_data_H = train_data_H / 255.0
+test_data_H = test_data_H / 255.0
 
 #setting the label variables to categorical formats
-train_labels = to_categorical(train_labels, num_classes= 26, dtype= 'int')
-test_labels = to_categorical(test_labels, num_classes= 26, dtype= 'int')
+train_labels_H = to_categorical(train_labels_H, num_classes= 26, dtype= 'int')
+test_labels_H = to_categorical(test_labels_H, num_classes= 26, dtype= 'int')
 
 #turning the data into 4d array
-train_data = train_data.reshape(train_data.shape[0], train_data.shape[1], train_data.shape[2], 1)
-test_data = test_data.reshape(test_data.shape[0], test_data.shape[1], test_data.shape[2], 1)
+train_data_H = train_data_H.reshape(train_data_H.shape[0], train_data_H.shape[1], train_data_H.shape[2], 1)
+test_data_H = test_data_H.reshape(test_data_H.shape[0], test_data_H.shape[1], test_data.shape[2], 1)
 
-print(train_data.shape, train_labels.shape)
-print(test_data.shape, test_labels.shape)
+print(train_data_H.shape, train_labels_H.shape)
+print(test_data_H.shape, test_labels_H.shape)
 
 #saving the numpy arrays  data to use for training...uncomment for these to save to your machine 
-# np.save(r"numpy/train_data", train_data)
-# np.save(r"numpy/train_labels", train_labels)
-# np.save(r"numpy/test_data", test_data)
-# np.save(r"numpy/test_labels", test_labels)
+# np.save(r"numpy/train_data_H", train_data_H)
+# np.save(r"numpy/train_labels_H", train_labels_H   )
+# np.save(r"numpy/test_data_H", test_data_H)
+# np.save(r"numpy/test_labels_H", test_labels_H)
