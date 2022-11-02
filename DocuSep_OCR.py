@@ -54,3 +54,4 @@ for img in glob.glob("croppedimg/*.png"):
     cv2.resizeWindow("Result", 1280, 768)
     cv2.imshow('Result', loop_img)
     cv2.waitKey()
+    print(boxes)
