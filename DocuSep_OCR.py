@@ -11,6 +11,18 @@ import glob
 
 pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
+dir_path= 'images'
+
+def cropper():
+    files = [f for f in os.listdir(dir_path)]
+    for file in files:
+        filename = dir_path + '/' + file
+        image = cv2.imread(filename)
+        cropped_img = image[750:2800,:]
+        cv2.imwrite('croppedimg/' + file, cropped_img)
+
+cropper()
+
 imgs = []
 for img in glob.glob("croppedimg/*.png"):
     n = cv2.imread(img)
