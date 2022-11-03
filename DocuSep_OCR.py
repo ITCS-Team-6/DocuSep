@@ -79,10 +79,9 @@ for img in glob.glob("croppedimg/*.png"):
     sum = np.add(bw,bh)
 
     #prints the amount of boudning boxes and sum of bounding boxes
-
     print(len(bw))
     print(sum)
-    if bw <= 30:
+    if (len(bw)) <= 30:
         print("This is unkown")
 
     cv2.waitKey()
