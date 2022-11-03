@@ -38,7 +38,7 @@ def thresholding(loop_image):
     return cv2.threshold(loop_image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
 thresh = thresholding(gray)
 Image.fromarray(thresh)
-
+# test
 imgs = []
 for img in glob.glob("croppedimg/*.png"):
     loop_img = cv2.imread(img)
