@@ -13,10 +13,14 @@ def cropper():
     for file in files:
         filename = dir_path + '/' + file
         image = cv2.imread(filename)
-        cropped_img = image[750:2800,:]
+        h,w,c = image.shape
+        cropped_img = image
+        if h > 2800:
+            cropped_img = image[750:2800, :]
+
         cv2.imwrite('croppedimg/' + file, cropped_img)
 
-# cropper()
+cropper()
 
 def get_grayscale(loop_img):
     return cv2.cvtColor(loop_img, cv2.COLOR_BGR2GRAY)
@@ -51,7 +55,7 @@ def remove_noise(loop_img):
 
 imgs = []
 #we use glob to find files within folder that have png exten
-imglist = glob.glob("croppedimg/*.png")
+imglist = glob.glob("croppedimg/*")
 random.shuffle(imglist)
 for img in imglist:
     loop_img = cv2.imread(img)
@@ -77,13 +81,16 @@ for img in imglist:
         bw.append(int(b[3]) - int(b[1]))
         bh.append(int(b[4]) - int(b[2]))
     cv2.namedWindow("Result", cv2.WINDOW_NORMAL)
-    cv2.resizeWindow("Result", 1280, 768)
+    # cv2.resizeWindow("Result", 1280, 768)
+    print(img)
+    print(h,w)
     cv2.imshow('Result', loop_img)
 
     #prints the amount of boudning boxes
     sum = np.multiply(bw, bh)
     print(len(bw))
     print(sum)
+
     if len(bw) <= 30:
         print("This is unkown")
 
