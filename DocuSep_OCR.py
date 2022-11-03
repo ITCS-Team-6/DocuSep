@@ -2,7 +2,7 @@ import os
 import cv2
 import pytesseract
 import glob
-
+import numpy as np
 pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 dir_path= 'images'
@@ -15,7 +15,7 @@ def cropper():
         cropped_img = image[750:2800,:]
         cv2.imwrite('croppedimg/' + file, cropped_img)
 
-# cropper()
+cropper()
 
 def get_grayscale(loop_img):
     return cv2.cvtColor(loop_img, cv2.COLOR_BGR2GRAY)
@@ -57,7 +57,6 @@ for img in glob.glob("croppedimg/*.png"):
     loop_img = thresholding(loop_img)
     loop_img = remove_noise(loop_img)
 
-    # print(type(loop_img))
     # loop_img = erode[loop_img]
     # loop_img = opening(loop_img)
     # loop_img = match_template(loop_img, template=0)
@@ -77,10 +76,13 @@ for img in glob.glob("croppedimg/*.png"):
     cv2.resizeWindow("Result", 1280, 768)
     cv2.imshow('Result', loop_img)
 
-    #prints the amount of boudning boxes
-    print(len(bw))
+    sum = np.add(bw,bh)
 
-    if len(bw) <= 30:
+    #prints the amount of boudning boxes and sum of bounding boxes
+
+    print(len(bw))
+    print(sum)
+    if bw <= 30:
         print("This is unkown")
 
     cv2.waitKey()
