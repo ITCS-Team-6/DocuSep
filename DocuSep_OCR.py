@@ -1,8 +1,9 @@
 import os
+import random
 import cv2
+import numpy as np
 import pytesseract
 import glob
-import numpy as np
 pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 dir_path= 'images'
@@ -15,7 +16,7 @@ def cropper():
         cropped_img = image[750:2800,:]
         cv2.imwrite('croppedimg/' + file, cropped_img)
 
-cropper()
+# cropper()
 
 def get_grayscale(loop_img):
     return cv2.cvtColor(loop_img, cv2.COLOR_BGR2GRAY)
@@ -50,13 +51,16 @@ def remove_noise(loop_img):
 
 imgs = []
 #we use glob to find files within folder that have png exten
-for img in glob.glob("croppedimg/*.png"):
+imglist = glob.glob("croppedimg/*.png")
+random.shuffle(imglist)
+for img in imglist:
     loop_img = cv2.imread(img)
     imgs.append(loop_img)
     loop_img = get_grayscale(loop_img)
     loop_img = thresholding(loop_img)
     loop_img = remove_noise(loop_img)
 
+    # print(type(loop_img))
     # loop_img = erode[loop_img]
     # loop_img = opening(loop_img)
     # loop_img = match_template(loop_img, template=0)
@@ -76,15 +80,11 @@ for img in glob.glob("croppedimg/*.png"):
     cv2.resizeWindow("Result", 1280, 768)
     cv2.imshow('Result', loop_img)
 
-    sum = np.add(bw,bh)
-
-    #prints the amount of boudning boxes and sum of bounding boxes
+    #prints the amount of boudning boxes
+    sum = np.multiply(bw, bh)
     print(len(bw))
     print(sum)
-    if (len(bw)) <= 30:
+    if len(bw) <= 30:
         print("This is unkown")
 
     cv2.waitKey()
-
-#(3rd number)x2-(first number)x1
-#(4th number)y2-(2nd number)y1
