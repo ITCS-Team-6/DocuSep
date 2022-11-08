@@ -4,6 +4,8 @@ import cv2
 import numpy as np
 import pytesseract
 import glob
+import matplotlib.pyplot as plt
+
 pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 dir_path= 'images'
@@ -60,6 +62,7 @@ random.shuffle(imglist)
 for img in imglist:
     loop_img = cv2.imread(img)
     imgs.append(loop_img)
+    #truncate function
     loop_img = get_grayscale(loop_img)
     loop_img = thresholding(loop_img)
     loop_img = remove_noise(loop_img)
@@ -82,8 +85,6 @@ for img in imglist:
         bh.append(int(b[4]) - int(b[2]))
     cv2.namedWindow("Result", cv2.WINDOW_NORMAL)
     # cv2.resizeWindow("Result", 1280, 768)
-    print(img)
-    print(h,w)
     cv2.imshow('Result', loop_img)
 
     #prints the amount of boudning boxes
@@ -91,7 +92,18 @@ for img in imglist:
     print(len(bw))
     print(sum)
 
+    #histogram
+    plt.hist(sum, density=True)
+    plt.xlabel('Sums')
+    plt.ylabel('Frequency')
+    plt.show()
+
+    #conditional for unkown
     if len(bw) <= 30:
         print("This is unkown")
 
+
     cv2.waitKey()
+
+
+
