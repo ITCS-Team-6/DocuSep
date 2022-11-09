@@ -92,6 +92,7 @@ for img in imglist:
     print(len(bw))
     print(sums)
 
+    #removing sums less than 50 and greater than 5000
     sums = np.delete(sums, np.where(sums < 50) and (sums > 5000))
 
     print(sums)
