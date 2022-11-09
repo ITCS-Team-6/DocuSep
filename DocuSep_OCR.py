@@ -88,14 +88,18 @@ for img in imglist:
     cv2.imshow('Result', loop_img)
 
     #prints the amount of boudning boxes
-    sum = np.multiply(bw, bh)
+    sums = np.multiply(bw, bh)
     print(len(bw))
-    print(sum)
+    print(sums)
+
+    sums = np.delete(sums, np.where(sums < 50) and (sums > 5000))
+
+    print(sums)
 
     #histogram
-    plt.hist(sum, density=True)
+    plt.hist(sums, bins = 100, edgecolor="red")
     plt.xlabel('Sums')
-    plt.ylabel('Frequency')
+    plt.ylabel('Num of Occurences')
     plt.show()
 
     #conditional for unkown
