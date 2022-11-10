@@ -98,7 +98,7 @@ for img in imglist:
     print(sums)
 
     #histogram
-    plt.hist(sums, bins = 100, edgecolor="red")
+    plt.hist(sums, bins = 100, edgecolor= "red")
     plt.xlabel('Sums')
     plt.ylabel('Num of Occurences')
     plt.show()
