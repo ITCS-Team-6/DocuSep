@@ -1,4 +1,4 @@
-import os
+from Functions import cropper,get_grayscale,thresholding,remove_noise
 import random
 import cv2
 import numpy as np
@@ -6,57 +6,15 @@ import pytesseract
 import glob
 import matplotlib.pyplot as plt
 
+
 pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-
-dir_path= 'images'
-
-def cropper():
-    files = [f for f in os.listdir(dir_path)]
-    for file in files:
-        filename = dir_path + '/' + file
-        image = cv2.imread(filename)
-        h,w,c = image.shape
-        cropped_img = image
-        if h > 2800:
-            cropped_img = image[750:2800, :]
-
-        cv2.imwrite('croppedimg/' + file, cropped_img)
 
 cropper()
 
-def get_grayscale(loop_img):
-    return cv2.cvtColor(loop_img, cv2.COLOR_BGR2GRAY)
-
-
-def thresholding(loop_img):
-    return cv2.threshold(loop_img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
-
-
-def remove_noise(loop_img):
-    return cv2.medianBlur(loop_img,5)
-
-
-# def erode(loop_img):
-#     kernel = np.ones((5,5),np.uint8)
-#     return cv2.erode(loop_img, kernel, iterations = 1)
-# erode = erode(gray)
-# Image.fromarray(erode)
-
-# def opening(loop_img):
-#     kernel = np.ones((5,5),np.uint8)
-#     return cv2.morphologyEx(loop_img, cv2.MORPH_OPEN, kernel)
-# opening = opening(gray)
-# Image.fromarray(opening)
-#
-# def match_template(loop_img, template):
-#     return cv2.matchTemplate(loop_img, template, cv2.TM_CCOEFF_NORMED)
-# match = match_template(gray, gray)
-# match
-
-
-
 imgs = []
-#we use glob to find files within folder that have png exten
+
+#we use glob to find files within folder that have png extension
+
 imglist = glob.glob("croppedimg/*")
 random.shuffle(imglist)
 for img in imglist:
@@ -65,19 +23,43 @@ for img in imglist:
     #truncate function
     loop_img = get_grayscale(loop_img)
     loop_img = thresholding(loop_img)
-    loop_img = remove_noise(loop_img)
-
-    # print(type(loop_img))
-    # loop_img = erode[loop_img]
-    # loop_img = opening(loop_img)
-    # loop_img = match_template(loop_img, template=0)
+    # loop_img = remove_noise(loop_img)
 
     h, w = loop_img.shape
     boxes = pytesseract.image_to_boxes(loop_img)
     bw = []
     bh = []
+
+    blkpix = []
+    max_hor = []
+
+    # this is for getting all the black pixels on the image for max horizontal run
     for b in boxes.splitlines():
         b = b.split(' ')
+        test_img = loop_img[h - int(b[4]): h - int(b[2]), int(b[1]):int(b[3])]
+        th, tw = test_img.shape
+        max = 0
+        for i in range(th):
+            count = 0
+            for j in range(tw):
+                if test_img[i, j] == 0:
+                    count += 1
+                else:
+                    if max < count:
+                        max = count
+                    count = 0
+            if max < count:
+                max = count
+            count = 0
+
+        num_black_pix = np.sum(test_img == 0)
+        blkpix.append(num_black_pix)
+        max_hor.append(max)
+
+
+    for b in boxes.splitlines():
+        b = b.split(' ')
+
         cv2.rectangle(loop_img, (int(b[1]), h-int(b[2])), (int(b[3]), h-int(b[4])), (0, 255, 0), 2)
 
         #adding the calculated cordinated to their arrays
@@ -88,21 +70,18 @@ for img in imglist:
     cv2.imshow('Result', loop_img)
 
     #prints the amount of boudning boxes
-    sums = np.multiply(bw, bh)
+    sums = np.array(blkpix)
     print(len(bw))
-    # print(sums)
 
     #removing sums less than 50 and greater than 5000
-    new_sums = np.delete(sums, np.where(sums < 50))
-    new_sums = np.delete(new_sums, np.where(new_sums > 5000))
+    new_sums = np.delete(sums, np.where(sums < 51))
+    new_sums = np.delete(new_sums, np.where(new_sums > 5001))
     print(new_sums)
 
+    #Getting duplicate sums and how many there are
     dupe, counts = np.unique(new_sums, return_counts=True)
-    print(dupe,counts)
-
-
-
-    # print(len(dupe)/len(bw))
+    dupe = dupe[counts > 1]
+    counts = counts[counts > 1]
 
     #histogram
     plt.hist(new_sums, bins = 100, edgecolor= "red")
@@ -113,10 +92,9 @@ for img in imglist:
 
 
 
-    #conditional for unkown
+    #conditionals
     if len(bw) <= 30:
-        print("This is unkown")
-
+        print("This is Unkown")
 
     cv2.waitKey()
 
