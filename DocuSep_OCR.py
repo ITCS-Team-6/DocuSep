@@ -90,18 +90,28 @@ for img in imglist:
     #prints the amount of boudning boxes
     sums = np.multiply(bw, bh)
     print(len(bw))
-    print(sums)
+    # print(sums)
 
     #removing sums less than 50 and greater than 5000
-    sums = np.delete(sums, np.where(sums < 50) and (sums > 5000))
+    new_sums = np.delete(sums, np.where(sums < 50))
+    new_sums = np.delete(new_sums, np.where(new_sums > 5000))
+    print(new_sums)
 
-    print(sums)
+    dupe, counts = np.unique(new_sums, return_counts=True)
+    print(dupe,counts)
+
+
+
+    # print(len(dupe)/len(bw))
 
     #histogram
-    plt.hist(sums, bins = 100, edgecolor= "red")
+    plt.hist(new_sums, bins = 100, edgecolor= "red")
     plt.xlabel('Sums')
     plt.ylabel('Num of Occurences')
     plt.show()
+
+
+
 
     #conditional for unkown
     if len(bw) <= 30:
