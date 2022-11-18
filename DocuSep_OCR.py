@@ -73,12 +73,12 @@ for img in imglist:
     sums = np.array(blkpix)
     sus_max_hor = np.array(max_hor)
     new_bw = np.array(bw)
-    print(len(bw))
+    #print(len(bw))
 
     #removing sums less than 50 and greater than 5000
     new_sums = np.delete(sums, np.where(sums < 51))
     new_sums = np.delete(new_sums, np.where(new_sums > 5001))
-    print(new_sums)
+    # print(new_sums)
 
     #Getting duplicate sums and how many there are
     dupe, counts = np.unique(new_sums, return_counts=True)
@@ -101,10 +101,10 @@ for img in imglist:
     # print(counts)
 
     #histogram
-    plt.hist(new_sums, bins = 100, edgecolor= "red")
-    plt.xlabel('Sums')
-    plt.ylabel('Num of Occurences')
-    plt.show()
+    # plt.hist(new_sums, bins = 100, edgecolor= "red")
+    # plt.xlabel('Sums')
+    # plt.ylabel('Num of Occurences')
+    # plt.show()
 
 
     #conditionals
