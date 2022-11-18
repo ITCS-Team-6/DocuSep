@@ -1,4 +1,4 @@
-from Functions import cropper,get_grayscale,thresholding,remove_noise
+from Functions import *
 import random
 import cv2
 import numpy as np
@@ -71,6 +71,8 @@ for img in imglist:
 
     #prints the amount of boudning boxes
     sums = np.array(blkpix)
+    sus_max_hor = np.array(max_hor)
+    new_bw = np.array(bw)
     print(len(bw))
 
     #removing sums less than 50 and greater than 5000
@@ -83,6 +85,21 @@ for img in imglist:
     dupe = dupe[counts > 1]
     counts = counts[counts > 1]
 
+    new_max_hor = np.delete(sus_max_hor, np.where(sus_max_hor < 11))
+
+    new_bw = np.delete(new_bw, np.where(sus_max_hor < 11))
+
+    ratio = np.divide(new_max_hor, new_bw)
+
+    avg_ratio = np.average(ratio)
+
+    counts_sums = np.sum(counts)
+
+    match_scr = counts_sums / len(bw)
+
+    # print(dupe)
+    # print(counts)
+
     #histogram
     plt.hist(new_sums, bins = 100, edgecolor= "red")
     plt.xlabel('Sums')
@@ -90,13 +107,26 @@ for img in imglist:
     plt.show()
 
 
-
-
     #conditionals
+
     if len(bw) <= 30:
         print("This is Unkown")
+    elif match_scr > .5:
+        print("This is Machine Printed")
+    elif avg_ratio > .8:
+        print("This is Machine Printed")
+    elif avg_ratio < .5:
+        print("This is Handwritten")
+    elif avg_ratio > .7 and match_scr > .05:
+        print("This is Machine Printed")
+    elif match_scr < .1:
+        print("This is Handwritten")
+    elif match_scr > .4:
+        print("This is Machine Printed")
+    else:
+        print("This is Uknown")
 
-    cv2.waitKey()
+cv2.waitKey()
 
 
 
