@@ -6,10 +6,9 @@ import pytesseract
 import glob
 import matplotlib.pyplot as plt
 
+pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 cropper()
-
 imgs = []
-
 # we use glob to find files within folder that have png extension
 
 imglist = glob.glob("croppedimg/*")
