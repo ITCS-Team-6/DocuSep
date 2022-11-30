@@ -6,21 +6,18 @@ import pytesseract
 import glob
 import matplotlib.pyplot as plt
 
-
-pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-
 cropper()
 
 imgs = []
 
-#we use glob to find files within folder that have png extension
+# we use glob to find files within folder that have png extension
 
 imglist = glob.glob("croppedimg/*")
 random.shuffle(imglist)
 for img in imglist:
     loop_img = cv2.imread(img)
     imgs.append(loop_img)
-    #truncate function
+    # truncate function
     loop_img = get_grayscale(loop_img)
     loop_img = thresholding(loop_img)
     # loop_img = remove_noise(loop_img)
@@ -62,25 +59,25 @@ for img in imglist:
 
         cv2.rectangle(loop_img, (int(b[1]), h-int(b[2])), (int(b[3]), h-int(b[4])), (0, 255, 0), 2)
 
-        #adding the calculated cordinated to their arrays
+        # Adding the calculated coordinated to their arrays
         bw.append(int(b[3]) - int(b[1]))
         bh.append(int(b[4]) - int(b[2]))
     cv2.namedWindow("Result", cv2.WINDOW_NORMAL)
     # cv2.resizeWindow("Result", 1280, 768)
     cv2.imshow('Result', loop_img)
 
-    #prints the amount of boudning boxes
+    # Prints the amount of boudning boxes
     sums = np.array(blkpix)
     sus_max_hor = np.array(max_hor)
     new_bw = np.array(bw)
-    #print(len(bw))
+    # print(len(bw))
 
-    #removing sums less than 50 and greater than 5000
+    # Removing sums less than 50 and greater than 5000
     new_sums = np.delete(sums, np.where(sums < 51))
     new_sums = np.delete(new_sums, np.where(new_sums > 5001))
     # print(new_sums)
 
-    #Getting duplicate sums and how many there are
+    # Getting duplicate sums and how many there are
     dupe, counts = np.unique(new_sums, return_counts=True)
     dupe = dupe[counts > 1]
     counts = counts[counts > 1]
@@ -100,17 +97,17 @@ for img in imglist:
     # print(dupe)
     # print(counts)
 
-    #histogram
-    plt.hist(new_sums, bins = 100, edgecolor= "red")
+
+    # Histogram
+    plt.hist(new_sums, bins=100, edgecolor="red")
     plt.xlabel('Sums')
-    plt.ylabel('Num of Occurences')
+    plt.ylabel('Num of Occurrences')
     plt.show()
 
-
-    #conditionals
+    # Conditionals
 
     if len(bw) <= 30:
-        print("This is Unkown")
+        print("This is Unknown")
     elif match_scr > .5:
         print("This is Machine Printed")
     elif avg_ratio > .8:
@@ -124,7 +121,7 @@ for img in imglist:
     elif match_scr > .4:
         print("This is Machine Printed")
     else:
-        print("This is Uknown")
+        print("This is Unknown")
 
 cv2.waitKey(0)
 
