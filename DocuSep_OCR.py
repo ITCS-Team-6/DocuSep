@@ -95,16 +95,16 @@ for img in imglist:
 
     counts_sums = np.sum(counts)
 
-    match_scr = counts_sums / len(bw)
+    match_scr = counts_sums / len(new_sums)
 
     # print(dupe)
     # print(counts)
 
     #histogram
-    # plt.hist(new_sums, bins = 100, edgecolor= "red")
-    # plt.xlabel('Sums')
-    # plt.ylabel('Num of Occurences')
-    # plt.show()
+    plt.hist(new_sums, bins = 100, edgecolor= "red")
+    plt.xlabel('Sums')
+    plt.ylabel('Num of Occurences')
+    plt.show()
 
 
     #conditionals
@@ -119,14 +119,14 @@ for img in imglist:
         print("This is Handwritten")
     elif avg_ratio > .7 and match_scr > .05:
         print("This is Machine Printed")
-    elif match_scr < .1:
+    elif match_scr < .3:
         print("This is Handwritten")
     elif match_scr > .4:
         print("This is Machine Printed")
     else:
         print("This is Uknown")
 
-cv2.waitKey()
+cv2.waitKey(0)
 
 
 
