@@ -11,7 +11,7 @@ def cropper():
         filename = dir_path + '/' + file
         image = None
         if filename.endswith('.pdf'):
-            pages = convert_from_path(r'C:\Users\Brenden\DocuSep\images\Technical Resume.pdf',
+            pages = convert_from_path(filename,
                                       poppler_path=r'C:\Program Files\poppler-0.68.0\bin')
             image = np.array(pages[0])
             image = cv2.resize(image, None, fx=0.5, fy=0.5)
