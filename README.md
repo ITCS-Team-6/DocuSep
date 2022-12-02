@@ -16,6 +16,7 @@ pip install opencv-python
 pip install numpy
 pip install pytesseract
 pip install image2pdf
-pip install matplotlib
+pip install tkinter
+pip install pillow
 ```
 #### Glob and OS are already part of python, no install is necessary.
