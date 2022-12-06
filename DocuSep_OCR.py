@@ -2,7 +2,7 @@ import tkinter
 from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import filedialog
-from test import *
+from Functions import *
 
 pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
