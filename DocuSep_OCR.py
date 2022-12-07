@@ -20,6 +20,7 @@ def upload_file():
     col=1
     row=3
 
+    indexid = 1
 
     for f in filename:
         loop_img = cropper(f)
@@ -98,36 +99,43 @@ def upload_file():
 
         match_scr = counts_sums / len(new_sums)
 
-        # print(dupe)
-        # print(counts)
-
-
 
 
         #handling of image
-        img = Image.open(f)
-        img = ImageTk.PhotoImage(img)
+        new_img = Image.fromarray(loop_img)
+
+        img = ImageTk.PhotoImage(new_img)
+
+
+        #variables for labels
+        answer = tkinter.Label(root)
+        answer1 = tkinter.Label(root)
+        answer2= tkinter.Label(root)
+        answer3 = tkinter.Label(root)
+        answer4 = tkinter.Label(root)
+        answer5= tkinter.Label(root)
+        answer6 = tkinter.Label(root)
+        answer7 = tkinter.Label(root)
 
         # Conditionals
-
         if len(bw) <= 30:
-            print("This is Unknown")
+            answer.label = Label(root, text = "This is Unkown").grid(row = 4 , column= indexid, columnspan=4)
         elif match_scr > .5:
-            print("This is Machine Printed")
+           answer1.label = Label(root, text = "This is Machine Printed").grid(row = 4 , column= indexid, columnspan=4)
         elif avg_ratio > .8:
-            print("This is Machine Printed")
+            answer2.label = Label(root, text = "This is Machine Printed").grid(row = 4 , column= indexid, columnspan=4)
         elif avg_ratio < .5:
-            print("This is Handwritten")
+            answer3.label = Label(root, text = "This is Handwritten").grid(row = 4 , column= indexid, columnspan=4)
         elif avg_ratio > .7 and match_scr > .05:
-            print("This is Machine Printed")
+            answer4.label = Label(root, text = "This is Machine Printed").grid(row = 4 , column= indexid, columnspan=4)
         elif match_scr < .3:
-            print("This is Handwritten")
+            answer5.label = Label(root, text = "This is Handwritten").grid(row = 4 , column= indexid, columnspan=4)
         elif match_scr > .4:
-            print("This is Machine Printed")
+            answer6.label = Label(root, text = "This is Machine Printed").grid(row = 4 , column= indexid, columnspan=4)
         else:
-            print("This is Unknown")
+            answer7.label = Label(root, text = "This is Unknown").grid(row = 4 , column= indexid, columnspan=4)
 
-
+        indexid+=1
 
         e1 = tkinter.Label(root)
         e1.grid(row=row, column=col)
@@ -138,13 +146,6 @@ def upload_file():
             col = 1
         else:
             col = col + 1
-
-
-
-
-
-
-
 
 
 root.mainloop()
