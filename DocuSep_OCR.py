@@ -9,18 +9,39 @@ pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesserac
 root = Tk()
 root.title('DocuSep')
 
-l1 = tkinter.Label(root, text= 'DocuSep', width = 30)
-l1.grid(row=1, column=1, columnspan=4)
-b1 = tkinter.Button(root, text='Upload Documents',width=20,command = lambda:upload_file())
-b1.grid(row = 2, column=1, columnspan=4)
+labels = []
+
+answer = None
+e1 = None
+answer1 = None
+answer2 = None
+answer3 = None
+answer4 = None
+answer5 = None
+answer6 = None
+answer7 = None
+
+
+
+
+b1 = tkinter.Button(root, text = "Upload Documents", width= 20 , command= lambda: upload_file())
+b1.grid(row=2, )
+b2 = tkinter.Button(root, text = 'Clear', width = 20, command = lambda: delete())
+b2.grid(row = 2, column= 7, columnspan= 10 )
+l1 = tkinter.Label(root, text = 'DocuSep', width = 30)
+l1.grid(row = 1, column = 1, columnspan = 4)
+
+def delete():
+    for l in labels:
+            l.destroy()
 
 def upload_file():
     file_types = [('Image Files', '*.jpg *.png *.jpeg *.pdf')]
     filename = tkinter.filedialog.askopenfilenames(filetypes=file_types)
-    col=1
-    row=3
-
+    col = 1
+    row = 3
     indexid = 1
+
 
     for f in filename:
         loop_img = cropper(f)
@@ -68,7 +89,7 @@ def upload_file():
             bw.append(int(b[3]) - int(b[1]))
             bh.append(int(b[4]) - int(b[2]))
 
-        # cv2.resizeWindow("Result", 1280, 768)
+
 
 
         # Prints the amount of boudning boxes
@@ -107,38 +128,48 @@ def upload_file():
         img = ImageTk.PhotoImage(new_img)
 
 
-        #variables for labels
-        answer = tkinter.Label(root)
-        answer1 = tkinter.Label(root)
-        answer2= tkinter.Label(root)
-        answer3 = tkinter.Label(root)
-        answer4 = tkinter.Label(root)
-        answer5= tkinter.Label(root)
-        answer6 = tkinter.Label(root)
-        answer7 = tkinter.Label(root)
+
 
         # Conditionals
         if len(bw) <= 30:
-            answer.label = Label(root, text = "This is Unkown").grid(row = 4 , column= indexid, columnspan=4)
+            answer = tkinter.Label(root, text = "This is Unkown")
+            answer.grid(row = 4 , column = indexid, columnspan = 10)
+            labels.append(answer)
         elif match_scr > .5:
-           answer1.label = Label(root, text = "This is Machine Printed").grid(row = 4 , column= indexid, columnspan=4)
+            answer1 = tkinter.Label(root, text = "This is Machine Printed")
+            answer1.grid(row = 4 , column = indexid, columnspan = 10)
+            labels.append(answer1)
         elif avg_ratio > .8:
-            answer2.label = Label(root, text = "This is Machine Printed").grid(row = 4 , column= indexid, columnspan=4)
+            answer2 = tkinter.Label(root, text = "This is Machine Printed")
+            answer2.grid(row = 4 , column = indexid, columnspan = 10)
+            labels.append(answer2)
         elif avg_ratio < .5:
-            answer3.label = Label(root, text = "This is Handwritten").grid(row = 4 , column= indexid, columnspan=4)
+            answer3 =tkinter.Label(root, text = "This is Handwritten")
+            answer3.grid(row = 4 , column = indexid, columnspan = 10)
+            labels.append(answer3)
         elif avg_ratio > .7 and match_scr > .05:
-            answer4.label = Label(root, text = "This is Machine Printed").grid(row = 4 , column= indexid, columnspan=4)
+            answer4 =tkinter.Label(root, text = "This is Machine Printed")
+            answer4.grid(row = 4 , column = indexid, columnspan = 10)
+            labels.append(answer4)
         elif match_scr < .3:
-            answer5.label = Label(root, text = "This is Handwritten").grid(row = 4 , column= indexid, columnspan=4)
+            answer5 =tkinter.Label(root, text = "This is Handwritten")
+            answer5.grid(row=4, column=indexid, columnspan=10)
+            labels.append(answer5)
         elif match_scr > .4:
-            answer6.label = Label(root, text = "This is Machine Printed").grid(row = 4 , column= indexid, columnspan=4)
+            answer6 =tkinter.Label(root, text = "This is Machine Printed")
+            answer6.grid(row = 4 , column = indexid, columnspan = 10)
+            labels.append(answer6)
         else:
-            answer7.label = Label(root, text = "This is Unknown").grid(row = 4 , column= indexid, columnspan=4)
+            answer7 =tkinter.Label(root, text = "This is Unknown")
+            answer7.grid(row = 4 , column = indexid, columnspan = 10)
+            labels.append(answer7)
 
         indexid+=1
 
+
         e1 = tkinter.Label(root)
-        e1.grid(row=row, column=col)
+        e1.grid(row = row, column = col)
+        labels.append(e1)
         e1.image = img
         e1['image'] = img
         if (col == 3):
@@ -146,6 +177,8 @@ def upload_file():
             col = 1
         else:
             col = col + 1
+
+
 
 
 root.mainloop()

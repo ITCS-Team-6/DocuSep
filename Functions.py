@@ -1,4 +1,4 @@
-
+import tkinter
 import cv2
 import numpy as np
 import pytesseract
@@ -38,3 +38,4 @@ def thresholding(loop_img):
 
 def remove_noise(loop_img):
     return cv2.medianBlur(loop_img,5)
+
