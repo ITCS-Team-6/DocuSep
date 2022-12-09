@@ -5,12 +5,14 @@
 ### PyTesseract
 - Download Link: https://github.com/UB-Mannheim/tesseract/wiki
 ```
-pytesseract.pytesseract.tesseract_cmd =r'<full_path_to_your_tesseract_executable>'
+pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 ```
 ### Poppler
 - Download Link: https://blog.alivate.com.au/poppler-windows/ grab the latest binary
+- Then extract in you where you downloaded it. Then move to C:\Program Files\poppler-0.68.0\bin
+-
 ```
-  poppler_path=r'<full_path_to_your_plopper_bin_folder>'
+  poppler_path=r'C:\Program Files\poppler-0.68.0\bin'
 ```
 ### Pip Installs
 ```
