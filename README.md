@@ -1,4 +1,6 @@
 # DocuSep | Imports
+## Main files needed are DocuSep_OCR.py, Functions.py, and if you want images to test there are images in the images folder.
+-Ignore Handwritten_Test.ipynb that is what we used as a foundation for the two main files.
 ## For this to work there are some imports that need to be done.
 ### You will need to download Pytesseract and Poppler.
 - Once that is done you will need to list the path for them:
@@ -10,7 +12,6 @@ pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesserac
 ### Poppler
 - Download Link: https://blog.alivate.com.au/poppler-windows/ grab the latest binary
 - Then extract in you where you downloaded it. Then move to C:\Program Files\poppler-0.68.0\bin
--
 ```
   poppler_path=r'C:\Program Files\poppler-0.68.0\bin'
 ```
