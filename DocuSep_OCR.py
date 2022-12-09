@@ -9,6 +9,14 @@ pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesserac
 root = Tk()
 root.title('DocuSep')
 
+b1 = tkinter.Button(root, text = "Upload Documents", width= 20 , command= lambda: upload_file())
+b1.grid(row=2,column= 1, columnspan= 10 )
+b2 = tkinter.Button(root, text = 'Clear', width = 10, command = lambda: delete())
+b2.grid(row = 2, column= 10, columnspan= 10 )
+l1 = tkinter.Label(root, text = 'DocuSep', width = 30)
+l1.grid(row = 1, column = 1, columnspan = 4)
+
+
 labels = []
 
 answer = None
@@ -21,13 +29,6 @@ answer5 = None
 answer6 = None
 answer7 = None
 
-
-b1 = tkinter.Button(root, text = "Upload Documents", width= 20 , command= lambda: upload_file())
-b1.grid(row=2,column= 1, columnspan= 10 )
-b2 = tkinter.Button(root, text = 'Clear', width = 20, command = lambda: delete())
-b2.grid(row = 2, column= 7, columnspan= 10 )
-l1 = tkinter.Label(root, text = 'DocuSep', width = 30)
-l1.grid(row = 1, column = 1, columnspan = 4)
 
 def delete():
     for l in labels:
@@ -71,7 +72,6 @@ def upload_file():
                         count = 0
                 if max < count:
                     max = count
-                count = 0
 
             num_black_pix = np.sum(test_img == 0)
             blkpix.append(num_black_pix)
@@ -113,7 +113,8 @@ def upload_file():
 
         #handling of image
         new_img = Image.fromarray(loop_img)
-        img = ImageTk.PhotoImage(new_img)
+        resize_img = new_img.resize((500,750))
+        img = ImageTk.PhotoImage(resize_img)
 
 
         # Conditionals
