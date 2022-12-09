@@ -12,7 +12,7 @@ root.title('DocuSep')
 labels = []
 
 answer = None
-e1 = None
+imgs = None
 answer1 = None
 answer2 = None
 answer3 = None
@@ -22,10 +22,8 @@ answer6 = None
 answer7 = None
 
 
-
-
 b1 = tkinter.Button(root, text = "Upload Documents", width= 20 , command= lambda: upload_file())
-b1.grid(row=2, )
+b1.grid(row=2,column= 1, columnspan= 10 )
 b2 = tkinter.Button(root, text = 'Clear', width = 20, command = lambda: delete())
 b2.grid(row = 2, column= 7, columnspan= 10 )
 l1 = tkinter.Label(root, text = 'DocuSep', width = 30)
@@ -47,7 +45,6 @@ def upload_file():
         loop_img = cropper(f)
         loop_img = get_grayscale(loop_img)
         loop_img = thresholding(loop_img)
-        # loop_img = remove_noise(loop_img)
 
         h, w = loop_img.shape
         boxes = pytesseract.image_to_boxes(loop_img)
@@ -90,18 +87,16 @@ def upload_file():
             bh.append(int(b[4]) - int(b[2]))
 
 
-
-
         # Prints the amount of boudning boxes
         sums = np.array(blkpix)
         sus_max_hor = np.array(max_hor)
         new_bw = np.array(bw)
-        # print(len(bw))
+
 
         # Removing sums less than 50 and greater than 5000
         new_sums = np.delete(sums, np.where(sums < 51))
         new_sums = np.delete(new_sums, np.where(new_sums > 5001))
-        # print(new_sums)
+
 
         # Getting duplicate sums and how many there are
         dupe, counts = np.unique(new_sums, return_counts=True)
@@ -109,25 +104,16 @@ def upload_file():
         counts = counts[counts > 1]
 
         new_max_hor = np.delete(sus_max_hor, np.where(sus_max_hor < 11))
-
         new_bw = np.delete(new_bw, np.where(sus_max_hor < 11))
-
         ratio = np.divide(new_max_hor, new_bw)
-
         avg_ratio = np.average(ratio)
-
         counts_sums = np.sum(counts)
-
         match_scr = counts_sums / len(new_sums)
-
 
 
         #handling of image
         new_img = Image.fromarray(loop_img)
-
         img = ImageTk.PhotoImage(new_img)
-
-
 
 
         # Conditionals
@@ -167,18 +153,17 @@ def upload_file():
         indexid+=1
 
 
-        e1 = tkinter.Label(root)
-        e1.grid(row = row, column = col)
-        labels.append(e1)
-        e1.image = img
-        e1['image'] = img
+        imgs = tkinter.Label(root)
+        imgs.grid(row = row, column = col)
+        labels.append(imgs)
+        imgs.image = img
+        imgs['image'] = img
+
         if (col == 3):
             row = row + 1
             col = 1
         else:
             col = col + 1
-
-
 
 
 root.mainloop()
