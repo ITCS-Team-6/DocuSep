@@ -7,7 +7,8 @@
 ```
 pytesseract.pytesseract.tesseract_cmd =r'<full_path_to_your_tesseract_executable>'
 ```
-### Plopper
+### Poppler
+- Download Link: https://blog.alivate.com.au/poppler-windows/ grab the latest binary
 ```
   poppler_path=r'<full_path_to_your_plopper_bin_folder>'
 ```
