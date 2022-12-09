@@ -20,4 +20,6 @@ pip install tk
 pip install pillow
 pip install pdf2image
 ```
-#### Glob and OS are already part of python, no install is necessary.
+## Images will be resized to 400x650
+## Once the GUI opens is you resize the width of the window the scrollbar will activte
+## More than 6 iamges in a window will mess up the labels for the catagories
