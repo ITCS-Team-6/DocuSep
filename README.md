@@ -1,6 +1,6 @@
 # DocuSep | Imports
 ## Main files needed are DocuSep_OCR.py, Functions.py, and if you want images to test there are images in the images folder.
--
+-Ignore Handwritten_Test.ipynb that is what we used as a foundation for the two main files.
 ## For this to work there are some imports that need to be done.
 ### You will need to download Pytesseract and Poppler.
 - Once that is done you will need to list the path for them:
