@@ -6,6 +6,7 @@ from Functions import *
 
 pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
+#creating GUI and buttons
 root = Tk()
 root.title('DocuSep')
 root.geometry("1920x1080")
@@ -27,7 +28,7 @@ b2.grid(row = 2, column= 10, columnspan= 4 )
 l1 = tkinter.Label(scndframe, text = 'DocuSep', width = 30)
 l1.grid(row = 1, column = 1, columnspan = 4)
 
-
+#globally decalred variables
 labels = []
 
 answer = None
@@ -40,7 +41,7 @@ answer5 = None
 answer6 = None
 answer7 = None
 
-
+#Functions for clearing and uploading
 def delete():
     for l in labels:
             l.destroy()
@@ -52,12 +53,13 @@ def upload_file():
     row = 3
     indexid = 1
 
-
+    #looping through images uploaded by user and applying post processing to them
     for f in filename:
         loop_img = cropper(f)
         loop_img = get_grayscale(loop_img)
         loop_img = thresholding(loop_img)
 
+        #creating variables/ assigning variables for our logic
         h, w = loop_img.shape
         boxes = pytesseract.image_to_boxes(loop_img)
         bw = []
@@ -114,6 +116,7 @@ def upload_file():
         dupe = dupe[counts > 1]
         counts = counts[counts > 1]
 
+        #logic that goes into determining image catagory
         new_max_hor = np.delete(sus_max_hor, np.where(sus_max_hor < 11))
         new_bw = np.delete(new_bw, np.where(sus_max_hor < 11))
         ratio = np.divide(new_max_hor, new_bw)
@@ -178,7 +181,7 @@ def upload_file():
 
 
 
-
+#scrollbar
 scrl= Scrollbar(frame, orient=VERTICAL)
 scrl.pack(side=RIGHT, fill=Y)
 scrl.config(command=canvas.yview)
