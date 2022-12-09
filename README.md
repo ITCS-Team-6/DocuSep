@@ -1,6 +1,6 @@
 # DocuSep | Imports
 ## For this to work there are some imports that need to be done.
-### You will need to dowmload Pytesseract and Poppler.
+### You will need to download Pytesseract and Poppler.
 - Once that is done you will need to list the path for them:
 ### PyTesseract
 ```
@@ -20,6 +20,6 @@ pip install tk
 pip install pillow
 pip install pdf2image
 ```
-## Images will be resized to 400x650
-## Once the GUI opens is you resize the width of the window the scrollbar will activte
-## More than 6 iamges in a window will mess up the labels for the catagories
+### Images will be resized to 400x650
+### Once the GUI opens is you resize the width of the window the scrollbar will activte
+### More than 6 iamges in a window will mess up the labels for the catagories
