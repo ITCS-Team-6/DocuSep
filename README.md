@@ -3,6 +3,7 @@
 ### You will need to download Pytesseract and Poppler.
 - Once that is done you will need to list the path for them:
 ### PyTesseract
+- Download Link: https://github.com/UB-Mannheim/tesseract/wiki
 ```
 pytesseract.pytesseract.tesseract_cmd =r'<full_path_to_your_tesseract_executable>'
 ```
