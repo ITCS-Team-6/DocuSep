@@ -8,12 +8,23 @@ pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesserac
 
 root = Tk()
 root.title('DocuSep')
+root.geometry("1920x1080")
 
-b1 = tkinter.Button(root, text = "Upload Documents", width= 20 , command= lambda: upload_file())
-b1.grid(row=2,column= 1, columnspan= 10 )
-b2 = tkinter.Button(root, text = 'Clear', width = 10, command = lambda: delete())
-b2.grid(row = 2, column= 10, columnspan= 10 )
-l1 = tkinter.Label(root, text = 'DocuSep', width = 30)
+frame = Frame(root, width=1900, height=1000)
+frame.pack(fill= BOTH, expand=1)
+
+canvas = Canvas(frame, width=1900, height=1000)
+canvas.pack(side=LEFT, fill=BOTH, expand=1)
+
+scndframe = Frame(canvas, width=1900, height=1000)
+
+canvas.create_window((0,0), window=scndframe, anchor="nw")
+
+b1 = tkinter.Button(scndframe, text = "Upload Documents", width= 20 , command= lambda: upload_file())
+b1.grid(row=2,column= 1, columnspan= 4 )
+b2 = tkinter.Button(scndframe, text = 'Clear', width = 10, command = lambda: delete())
+b2.grid(row = 2, column= 10, columnspan= 4 )
+l1 = tkinter.Label(scndframe, text = 'DocuSep', width = 30)
 l1.grid(row = 1, column = 1, columnspan = 4)
 
 
@@ -113,58 +124,65 @@ def upload_file():
 
         #handling of image
         new_img = Image.fromarray(loop_img)
-        resize_img = new_img.resize((500,750))
+        resize_img = new_img.resize((400,650))
         img = ImageTk.PhotoImage(resize_img)
 
-
-        # Conditionals
-        if len(bw) <= 30:
-            answer = tkinter.Label(root, text = "This is Unkown")
-            answer.grid(row = 4 , column = indexid, columnspan = 10)
-            labels.append(answer)
-        elif match_scr > .5:
-            answer1 = tkinter.Label(root, text = "This is Machine Printed")
-            answer1.grid(row = 4 , column = indexid, columnspan = 10)
-            labels.append(answer1)
-        elif avg_ratio > .8:
-            answer2 = tkinter.Label(root, text = "This is Machine Printed")
-            answer2.grid(row = 4 , column = indexid, columnspan = 10)
-            labels.append(answer2)
-        elif avg_ratio < .5:
-            answer3 =tkinter.Label(root, text = "This is Handwritten")
-            answer3.grid(row = 4 , column = indexid, columnspan = 10)
-            labels.append(answer3)
-        elif avg_ratio > .7 and match_scr > .05:
-            answer4 =tkinter.Label(root, text = "This is Machine Printed")
-            answer4.grid(row = 4 , column = indexid, columnspan = 10)
-            labels.append(answer4)
-        elif match_scr < .3:
-            answer5 =tkinter.Label(root, text = "This is Handwritten")
-            answer5.grid(row=4, column=indexid, columnspan=10)
-            labels.append(answer5)
-        elif match_scr > .4:
-            answer6 =tkinter.Label(root, text = "This is Machine Printed")
-            answer6.grid(row = 4 , column = indexid, columnspan = 10)
-            labels.append(answer6)
-        else:
-            answer7 =tkinter.Label(root, text = "This is Unknown")
-            answer7.grid(row = 4 , column = indexid, columnspan = 10)
-            labels.append(answer7)
-
-        indexid+=1
-
-
-        imgs = tkinter.Label(root)
-        imgs.grid(row = row, column = col)
+        imgs = tkinter.Label(scndframe)
+        imgs.grid(row=row, column=col)
         labels.append(imgs)
         imgs.image = img
         imgs['image'] = img
 
-        if (col == 3):
+        if (col == 4):
             row = row + 1
             col = 1
         else:
             col = col + 1
 
+
+        # Conditionals
+        if len(bw) <= 30:
+            answer = tkinter.Label(scndframe, text = "This is Unkown")
+            answer.grid(row = row + 2 , column = indexid, columnspan = 1)
+            labels.append(answer)
+        elif match_scr > .5:
+            answer1 = tkinter.Label(scndframe, text = "This is Machine Printed")
+            answer1.grid(row = row + 2 , column = indexid, columnspan = 1)
+            labels.append(answer1)
+        elif avg_ratio > .8:
+            answer2 = tkinter.Label(scndframe, text = "This is Machine Printed")
+            answer2.grid(row = row + 2 , column = indexid, columnspan = 1)
+            labels.append(answer2)
+        elif avg_ratio < .5:
+            answer3 =tkinter.Label(scndframe, text = "This is Handwritten")
+            answer3.grid(row = row + 2 , column = indexid, columnspan = 1)
+            labels.append(answer3)
+        elif avg_ratio > .7 and match_scr > .05:
+            answer4 =tkinter.Label(scndframe, text = "This is Machine Printed")
+            answer4.grid(row = row + 2 , column = indexid, columnspan = 1)
+            labels.append(answer4)
+        elif match_scr < .3:
+            answer5 =tkinter.Label(scndframe, text = "This is Handwritten")
+            answer5.grid(row=row + 2, column= indexid, columnspan=1)
+            labels.append(answer5)
+        elif match_scr > .4:
+            answer6 =tkinter.Label(scndframe, text = "This is Machine Printed")
+            answer6.grid(row = row + 2 , column = indexid, columnspan = 1)
+            labels.append(answer6)
+        else:
+            answer7 =tkinter.Label(scndframe, text = "This is Unknown")
+            answer7.grid(row = row + 2 , column = indexid, columnspan = 1)
+            labels.append(answer7)
+
+        indexid+=1
+
+
+
+
+scrl= Scrollbar(frame, orient=VERTICAL)
+scrl.pack(side=RIGHT, fill=Y)
+scrl.config(command=canvas.yview)
+canvas.configure(yscrollcommand=scrl.set)
+canvas.bind('<Configure>', lambda e:canvas.configure(scrollregion=canvas.bbox("all")))
 
 root.mainloop()
