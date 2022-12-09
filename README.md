@@ -12,7 +12,6 @@ pytesseract.pytesseract.tesseract_cmd =r'C:\Program Files\Tesseract-OCR\tesserac
 ### Poppler
 - Download Link: https://blog.alivate.com.au/poppler-windows/ grab the latest binary
 - Then extract in you where you downloaded it. Then move to C:\Program Files\poppler-0.68.0\bin
--
 ```
   poppler_path=r'C:\Program Files\poppler-0.68.0\bin'
 ```
