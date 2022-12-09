@@ -21,5 +21,5 @@ pip install pillow
 pip install pdf2image
 ```
 ### Images will be resized to 400x650
-### Once the GUI opens is you resize the width of the window the scrollbar will activte
+### Once the GUI opens if you resize the width of the window the scrollbar will activte
 ### More than 6 iamges in a window will mess up the labels for the catagories
